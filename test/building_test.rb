@@ -10,8 +10,8 @@ class BuildingTest < Minitest::Test
     @building = Building.new
     @unit1 = Apartment.new({number: "A1", monthly_rent: 1200, bathrooms: 1, bedrooms: 1})
     @unit2 = Apartment.new({number: "B2", monthly_rent: 999, bathrooms: 2, bedrooms: 2})
-    @renter1 = Renter.new("Aurora")
-    @renter2 = Renter.new("Tim")
+    @unit3 = Apartment.new({number: "C3", monthly_rent: 1150, bathrooms: 2, bedrooms: 2})
+    @unit4 = Apartment.new({number: "D4", monthly_rent: 1500, bathrooms: 2, bedrooms: 3})
   end
 
   def test_it_exists
@@ -28,22 +28,91 @@ class BuildingTest < Minitest::Test
   end
 
   def test_can_add_renter_to_apartment
+    renter1 = Renter.new("Aurora")
+    renter2 = Renter.new("Tim")
     @building.add_unit(@unit1)
     @building.add_unit(@unit2)
 
-    @unit1.add_renter(@renter1)
-    @unit2.add_renter(@renter2)
+    @unit1.add_renter(renter1)
+    @unit2.add_renter(renter2)
 
     assert_equal ["Aurora", "Tim"], @building.renters
   end
 
   def test_can_calculate_average_rent
+    renter1 = Renter.new("Aurora")
+    renter2 = Renter.new("Tim")
     @building.add_unit(@unit1)
     @building.add_unit(@unit2)
 
-    @unit1.add_renter(@renter1)
-    @unit2.add_renter(@renter2)
+    @unit1.add_renter(renter1)
+    @unit2.add_renter(renter2)
 
     assert_equal 1099.5, @building.average_rent
   end
+
+  def test_rented_units
+    renter1 = Renter.new("Spencer")
+
+    @building.add_unit(@unit1)
+    @building.add_unit(@unit2)
+    @building.add_unit(@unit3)
+
+    assert_equal [], @building.rented_units
+
+    @unit2.add_renter(renter1)
+
+    assert_equal [@unit2], @building.rented_units
+  end
 end
+
+## Iteration 3
+#
+# Use TDD to update your Building class so that it responds to the following interaction pattern. Note that the `renter_with_highest_rent` method should ignore units with no renter.
+#
+#
+# renter1 = Renter.new("Spencer")
+# # => #<Renter:0x00007fa83bc37978...>
+#
+# building.add_unit(unit1)
+#
+# building.add_unit(unit2)
+#
+# building.add_unit(unit3)
+#
+# building.rented_units
+# # => []
+#
+# unit2.add_renter(renter1)
+#
+# building.rented_units
+# # => [#<Apartment:0x00007fa83bc777d0...>]
+#
+# building.renter_with_highest_rent
+# # => #<Renter:0x00007fa83bc37978...>
+#
+# renter2 = Renter.new("Jessie")
+# # => #<Renter:0x00007fa83b9b0358...>
+#
+# unit1.add_renter(renter2)
+#
+# building.renter_with_highest_rent
+# # => #<Renter:0x00007fa83b9b0358...>
+#
+# renter3 = Renter.new("Max")
+# # => #<Renter:0x00007fa83b7t0456...>
+#
+# unit3.add_renter(renter3)
+#
+# building.renter_with_highest_rent
+# # => #<Renter:0x00007fa83b9b0358...>
+#
+# building.add_unit(unit4)
+#
+# building.units_by_number_of_bedrooms
+# # =>
+# # {
+# #   3 => ["D4" ],
+# #   2 => ["B2", "C3"],
+# #   1 => ["A1"]
+# # }

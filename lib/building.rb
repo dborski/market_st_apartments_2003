@@ -4,6 +4,7 @@ class Building
   def initialize
     @units = []
     @renters = []
+    @rented_units = []
   end
 
   def add_unit(unit)
@@ -22,5 +23,10 @@ class Building
   def average_rent
     sum = @units.sum {|unit|unit.monthly_rent}
     sum / @units.length.to_f
+  end
+
+  def rented_units
+    @units.each {|unit| @rented_units << unit if unit.renter != nil}
+    @rented_units
   end
 end
