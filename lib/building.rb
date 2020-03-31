@@ -41,8 +41,9 @@ class Building
   end
 
   def units_by_number_of_bedrooms
-    units.group_by do |unit|
-      unit.bedrooms
-    end 
+    unit_numbers = units.map do |unit|
+      unit.number
+    end
+    #####argh ran out of time
   end
 end
