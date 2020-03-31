@@ -29,4 +29,20 @@ class Building
     @units.each {|unit| @rented_units << unit if unit.renter != nil}
     @rented_units
   end
+
+  def highest_rent
+    rented_units.max_by do |unit|
+     unit.monthly_rent
+   end
+  end
+
+  def renter_with_highest_rent
+    highest_rent.renter
+  end
+
+  def units_by_number_of_bedrooms
+    units.group_by do |unit|
+      unit.bedrooms
+    end 
+  end
 end
