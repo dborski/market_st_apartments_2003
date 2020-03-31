@@ -12,12 +12,13 @@ class Building
   end
 
   def renters
-    @units.each do |unit|
+    renter_names = []
+    units.each do |unit|
       if unit.renter != nil
-        @renters << unit.renter.name
+        renter_names << unit.renter.name
       end
     end
-    @renters
+    @renters = renter_names
   end
 
   def average_rent
@@ -40,10 +41,15 @@ class Building
     highest_rent.renter
   end
 
+  def sorted_units
+    units.group_by {|unit| unit.bedrooms}
+  end
+
   def units_by_number_of_bedrooms
-    unit_numbers = units.map do |unit|
-      unit.number
+    sorted_hash = {}
+    sorted_units.map do |key, value|
+      sorted_hash[key] = value.map {|value| value.number}.flatten
     end
-    #####argh ran out of time
+    sorted_hash
   end
 end

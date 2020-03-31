@@ -33,7 +33,12 @@ class BuildingTest < Minitest::Test
     @building.add_unit(@unit1)
     @building.add_unit(@unit2)
 
+    assert_equal [], @building.renters
+
     @unit1.add_renter(renter1)
+
+    assert_equal ["Aurora"], @building.renters
+
     @unit2.add_renter(renter2)
 
     assert_equal ["Aurora", "Tim"], @building.renters
@@ -73,6 +78,7 @@ class BuildingTest < Minitest::Test
     @building.add_unit(@unit1)
     @building.add_unit(@unit2)
     @building.add_unit(@unit3)
+    
     @unit2.add_renter(renter1)
 
     assert_equal renter1, @building.renter_with_highest_rent
@@ -99,27 +105,3 @@ class BuildingTest < Minitest::Test
   assert_equal expected, @building.units_by_number_of_bedrooms
   end
 end
-
-## Iteration 3
-#
-# Use TDD to update your Building class so that it responds to the following interaction pattern. Note that the `renter_with_highest_rent` method should ignore units with no renter.
-
-
-#
-# renter3 = Renter.new("Max")
-# # => #<Renter:0x00007fa83b7t0456...>
-#
-# unit3.add_renter(renter3)
-#
-# building.renter_with_highest_rent
-# # => #<Renter:0x00007fa83b9b0358...>
-#
-# building.add_unit(unit4)
-#
-# building.units_by_number_of_bedrooms
-# # =>
-{
-  3 => ["D4" ],
-  2 => ["B2", "C3"],
- 1 => ["A1"]
- }
