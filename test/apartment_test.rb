@@ -29,12 +29,3 @@ class ApartmentTest < Minitest::Test
     assert_equal @renter1, @unit1.renter
   end
 end
-
-
-# unit1.renter
-# # => nil
-#
-# unit1.add_renter(renter1)
-#
-# unit1.renter
-# # => #<Renter:0x00007fb3ee106ce8...>
