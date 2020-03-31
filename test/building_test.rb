@@ -35,29 +35,15 @@ class BuildingTest < Minitest::Test
     @unit2.add_renter(@renter2)
 
     assert_equal ["Aurora", "Tim"], @building.renters
+  end
 
+  def test_can_calculate_average_rent
+    @building.add_unit(@unit1)
+    @building.add_unit(@unit2)
+
+    @unit1.add_renter(@renter1)
+    @unit2.add_renter(@renter2)
+
+    assert_equal 1099.5, @building.average_rent
   end
 end
-
-
-
-
-# ## Iteration 2
-#
-# Use TDD to create a Building class that responds to the following interaction pattern.
-
-# building.renters
-# # => []
-#
-#
-# building.renters
-# # => ["Aurora"]
-#
-#
-# unit2.add_renter(renter2)
-#
-# building.renters
-# # => ["Aurora", "Tim"]
-#
-# building.average_rent
-# # => 1099.5
