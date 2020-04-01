@@ -27,8 +27,10 @@ class Building
   end
 
   def rented_units
-    @units.each {|unit| @rented_units << unit if unit.renter != nil}
-    @rented_units
+    rented_units = @units.find_all do |unit|
+      !unit.renter.nil?
+    end
+    rented_units
   end
 
   def highest_rent
