@@ -52,4 +52,12 @@ class Building
     end
     sorted_hash
   end
+
+  def annual_breakdown
+    annual_breakdown = {}
+    rented_units.each do |unit|
+      annual_breakdown[unit.renter.name] = unit.monthly_rent * 12
+    end
+    annual_breakdown
+  end
 end

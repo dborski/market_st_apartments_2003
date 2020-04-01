@@ -78,7 +78,7 @@ class BuildingTest < Minitest::Test
     @building.add_unit(@unit1)
     @building.add_unit(@unit2)
     @building.add_unit(@unit3)
-    
+
     @unit2.add_renter(renter1)
 
     assert_equal renter1, @building.renter_with_highest_rent
@@ -104,4 +104,32 @@ class BuildingTest < Minitest::Test
                 }
   assert_equal expected, @building.units_by_number_of_bedrooms
   end
+
+  def test_annual_breakdown
+    renter1 = Renter.new("Spencer")
+    renter2 = Renter.new("Jessie")
+
+    @building.add_unit(@unit1)
+    @building.add_unit(@unit2)
+    @building.add_unit(@unit3)
+    @unit2.add_renter(renter1)
+
+    assert_equal ({"Spencer" => 11988}), @building.annual_breakdown
+
+    @unit1.add_renter(renter2)
+
+    assert_equal ({"Jessie" => 14400, "Spencer" => 11988}), @building.annual_breakdown
+  end
 end
+
+# ## Iteration 4
+#
+# Use TDD to add an `annual_breakdown` method to your Building class.
+# This method should associate a renter name with the amount they pay in rent for the whole year.
+ # Note that the `annual_breakdown` method should ignore units with no renter.
+ # Your Building class should now respond to the following interaction pattern:
+
+
+#building.rooms_by_renter
+# #=> {<Renter:0x00007fb333af5a80...> => {bathrooms: 1, bedrooms: 1},
+# #    #<Renter:0x00007fb333d0d7f0...> => {bathrooms: 2, bedrooms: 2}}
